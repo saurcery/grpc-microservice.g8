@@ -92,7 +92,7 @@ dockerfile in docker := {
     from("openjdk:jre-alpine")
     expose(80)
     expose(9111)
-    env("JAVA_OPTS" -> "-Xmx$app_memory$")
+    env("JAVA_OPTS" -> "-Xmx$service_memory$")
     entryPoint(s"\$targetDir/bin/\${executableScriptName.value}")
     copy(appDir, targetDir)
   }
