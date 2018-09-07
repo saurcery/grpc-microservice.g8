@@ -1,21 +1,19 @@
 ////////// Project Build Info //////////
 // Note : "version" string is auto set by sbt-dynver plugin, below we format the version.
 
-//def versionFmt(out: sbtdynver.GitDescribeOutput): String = {
-//  val dirtySuffix = out.dirtySuffix.dropPlus.mkString("-", "")
-//  if (out.isCleanAfterTag) out.ref.dropV.value + dirtySuffix // no commit info if clean after tag
-//  else out.ref.dropV.value + out.commitSuffix.mkString("-", "-", "") + dirtySuffix
-//}
-//
-//def fallbackVersion(d: java.util.Date): String = s"HEAD-${sbtdynver.DynVer timestamp d}"
-//
-//inThisBuild(List(
-//  version := dynverGitDescribeOutput.value.mkVersion(versionFmt, fallbackVersion(dynverCurrentDate.value)),
-//  dynver := {
-//    val d = new java.util.Date
-//    sbtdynver.DynVer.getGitDescribeOutput(d).mkVersion(versionFmt, fallbackVersion(d))
-//  }
-//))
+def versionFmt(out: sbtdynver.GitDescribeOutput): String = {
+  val dirtySuffix = out.dirtySuffix.dropPlus.mkString("-", "")
+  if (out.isCleanAfterTag) out.ref.dropV.value + dirtySuffix // no commit info if clean after tag
+  else out.ref.dropV.value + out.commitSuffix.mkString("-", "-", "") + dirtySuffix
+}
+
+inThisBuild(List(
+  version := dynverGitDescribeOutput.value.mkVersion(versionFmt, "na"),
+  dynver := {
+    val d = new java.util.Date
+    sbtdynver.DynVer.getGitDescribeOutput(d).mkVersion(versionFmt, "na")
+  }
+))
 
 lazy val root = (project in file(".")).
   enablePlugins(BuildInfoPlugin).
