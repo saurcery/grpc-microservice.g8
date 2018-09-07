@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+import "scalapb/scalapb.proto";
+import "google/api/annotations.proto";
+
+option (scalapb.options) = {
+  package_name: $package$.$service_name$.service
+  single_file: true
+  flat_package: true
+};
+
+package $proto_package$.$service_name$.service.v1;
+
+/////////////////  Shared Messages /////////////////
+message EmptyMessage {}
+
+/////////////////  Request Messages /////////////////
+
+
+/////////////////  Response Messages /////////////////
+
+message AboutInfoResponse {
+  string name = 1;
+  string version = 2;
+}
+
+// HealthCheckResponse contains information that describes the server's health.
+message HealthCheckResponse {
+  enum ServingStatus {
+    UNKNOWN = 0;
+    SERVING = 1;
+    NOT_SERVING = 2;
+  }
+  ServingStatus status = 1;
+}
+
+service $service_class_name$ {
+  // Displays the build or other info about this service.
+  rpc GetAboutInfo(EmptyMessage) returns (AboutInfoResponse){
+    option (google.api.http) = {
+      get: "/_about"
+      body: "*"
+    };
+  }
+
+  // Returns the health of this service.
+  rpc CheckHealth(EmptyMessage) returns (HealthCheckResponse){
+    option (google.api.http) = {
+      get: "/_status"
+    };
+  }
+}
