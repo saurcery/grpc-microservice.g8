@@ -2,6 +2,7 @@ package $package$.service
 
 import java.util.logging.Logger
 
+import $package$.$service_name$.service.$service_class_name$Handler
 import grpcgateway.server.GrpcGatewayServerBuilder
 import io.grpc.ManagedChannelBuilder
 
@@ -18,14 +19,14 @@ class AppRestGateway(port: Int, grpcHost: String, grpcPort: Int)(implicit ec: Ex
 
   private val gateway = GrpcGatewayServerBuilder
     .forPort(port)
-    .addService(new AdsBizHandler(channel))
+    .addService(new $service_class_name$Handler(channel))
     .build()
 
   private var shutdownHook: Option[ShutdownHookThread] = None
 
   def start(): Unit = {
     gateway.start()
-    logger.info(s"GRPC Gateway started, listening on $port")
+    logger.info(s"GRPC Gateway started, listening on \$port")
     shutdownHook = Option(
       sys.addShutdownHook {
         // Use stderr here since the logger may has been reset by its JVM shutdown hook.

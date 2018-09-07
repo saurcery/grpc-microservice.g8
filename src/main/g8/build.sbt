@@ -1,3 +1,4 @@
+
 ////////// Project Build Info //////////
 // Note : "version" string is auto set by sbt-dynver plugin, below we format the version.
 
@@ -7,11 +8,13 @@ def versionFmt(out: sbtdynver.GitDescribeOutput): String = {
   else out.ref.dropV.value + out.commitSuffix.mkString("-", "-", "") + dirtySuffix
 }
 
+def fallbackVersion(d: java.util.Date): String = s"HEAD-\${sbtdynver.DynVer timestamp d}"
+
 inThisBuild(List(
-  version := dynverGitDescribeOutput.value.mkVersion(versionFmt, "na"),
+  version := dynverGitDescribeOutput.value.mkVersion(versionFmt, fallbackVersion(dynverCurrentDate.value)),
   dynver := {
     val d = new java.util.Date
-    sbtdynver.DynVer.getGitDescribeOutput(d).mkVersion(versionFmt, "na")
+    sbtdynver.DynVer.getGitDescribeOutput(d).mkVersion(versionFmt, fallbackVersion(d))
   }
 ))
 
@@ -90,7 +93,7 @@ dockerfile in docker := {
     expose(80)
     expose(9111)
     env("JAVA_OPTS" -> "-Xmx$app_memory$")
-    entryPoint(s"$targetDir/bin/${executableScriptName.value}")
+    entryPoint(s"\$targetDir/bin/\${executableScriptName.value}")
     copy(appDir, targetDir)
   }
 }

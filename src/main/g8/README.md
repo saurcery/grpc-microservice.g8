@@ -1,6 +1,6 @@
 # $service_name$
 
-
+Supply service description here.
 
 ## Getting Started
 
@@ -31,6 +31,11 @@ Run the AppServer
 sbt run
 ```
 
+Generate docker image for this service
+```
+sbt docker
+```
+
 ### Coding Styles
 scalastyle-config.xml
 
@@ -42,12 +47,23 @@ scalastyle-config.xml
 curl -v http://localhost:8080/_status
 ```
 
-## Deployment
+## Versioning
 
+Current about/version of the build is available at
 ```
-make docker
-make deploy
+curl -v http://localhost:8080/_about
 ```
+We use [sbt-dynver](https://github.com/dwijnand/sbt-dynver) & [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo) plugins to load this info dynamically.
+
+Example output
+```
+{
+  "name": "$service_name$",
+  "version": "7c58839f-20180831-1535"
+}
+```
+version here is read as = `"git describe dirty suffix" - "yyMMdd" - "time of the day"`
+
 
 ## Migration
 We use Flyway Java library as the migraiton tool. [Flyway](https://flywaydb.org/getstarted/)
@@ -74,24 +90,6 @@ Flyway will automatically pick up migration files from the directory and apply t
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-Current about/version of the build is available at
-```
-curl -v http://localhost:8080/_about
-```
-We use [sbt-dynver](https://github.com/dwijnand/sbt-dynver) & [sbt-buildinfo](https://github.com/sbt/sbt-buildinfo) plugins to load this info dynamically.
-
-Example output
-```
-{
-  "name": "$service_name$",
-  "version": "7c58839f-20180831-1535"
-}
-```
-version here is read as = `"git describe dirty suffix" - "yyMMdd" - "time of the day"`
-
 
 ## Authors
 "$author$"

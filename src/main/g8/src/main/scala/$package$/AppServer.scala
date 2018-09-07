@@ -1,5 +1,8 @@
 package $package$.service
 
+import io.grpc.ServerBuilder
+import $package$.$service_name$.service._
+
 object AppServer extends App {
 import scala.concurrent.ExecutionContext.Implicits.global
 
@@ -14,7 +17,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
     ServerBuilder
       .forPort(grpcPort)
       .addService(
-        AdsBizGrpc.bindService(
+        $service_class_name$Grpc.bindService(
           new AppService(),
           scala.concurrent.ExecutionContext.global
         )
@@ -25,10 +28,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
   val gateway = new AppRestGateway(httpPort, "localhost", grpcPort)
 
   // Apply migration on startup
-   val dbConfig = conf.getConfig("db.dataSource")
-   val migration = new Migrate()
-   migration.init("postgres", dbConfig)
-   migration.migrate()
+//   val dbConfig = conf.getConfig("db.dataSource")
+//   val migration = new Migrate()
+//   migration.init("$service_db_datasource$", dbConfig)
+//   migration.migrate()
 
   // begin server init
   grpcServer.start()

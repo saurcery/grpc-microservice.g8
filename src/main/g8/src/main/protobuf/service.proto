@@ -4,7 +4,7 @@ import "scalapb/scalapb.proto";
 import "google/api/annotations.proto";
 
 option (scalapb.options) = {
-  package_name: $package$.$service_name$.service
+  package_name: "$package$.$service_name$.service"
   single_file: true
   flat_package: true
 };
@@ -39,7 +39,6 @@ service $service_class_name$ {
   rpc GetAboutInfo(EmptyMessage) returns (AboutInfoResponse){
     option (google.api.http) = {
       get: "/_about"
-      body: "*"
     };
   }
 

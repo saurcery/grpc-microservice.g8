@@ -9,7 +9,7 @@ class AppGrpcServer(server: Server) {
 
   def start(): Unit = {
     server.start()
-    logger.info(s"Server started, listening on ${server.getPort}")
+    logger.info(s"Server started, listening on \${server.getPort}")
     sys.addShutdownHook {
       // Use stderr here since the logger may has been reset by its JVM shutdown hook.
       System.err.println("*** shutting down gRPC server since JVM is shutting down")
