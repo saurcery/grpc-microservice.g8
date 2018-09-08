@@ -1,7 +1,7 @@
 package $package$.service
 
 import java.util.logging.Logger
-import io.grpc.{Server, ServerBuilder}
+import io.grpc.Server
 
 class AppGrpcServer(server: Server) {
 

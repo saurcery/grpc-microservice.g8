@@ -23,7 +23,7 @@ lazy val root = (project in file(".")).
   settings(
     name := "$service_name$",
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
-    buildInfoPackage := "$package$.build"
+    buildInfoPackage := "$package$.$service_name$.build"
   )
 
 scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation")

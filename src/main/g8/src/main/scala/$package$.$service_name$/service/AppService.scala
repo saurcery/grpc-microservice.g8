@@ -1,6 +1,6 @@
 package $package$.service
 
-import $package$.build.BuildInfo
+import $package$.$service_name$.build.BuildInfo
 import $package$.$service_name$.service._
 import scala.concurrent.Future
 
